@@ -14,13 +14,13 @@
 
 
 
-result = 0
+# result = 0
 
-done = True
-while done:
-    number = float(input('enter a number: '))
-    result += number
-    if input('Do you want to quit? (yes or no)> ') == 'yes':
-        break
+# done = True
+# while done:
+#     number = float(input('enter a number: '))
+#     result += number
+#     if input('Do you want to quit? (yes or no)> ') == 'yes':
+#         break
         # done = False
-print("result is:", f'{result:g}')
+# print("result is:", f'{result:g}')
