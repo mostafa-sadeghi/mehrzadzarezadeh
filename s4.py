@@ -54,4 +54,5 @@ if user_hand == "r":
     elif computer_hand == "r":
         print("both equal")
 elif user_hand == "p":
+    pass
     
