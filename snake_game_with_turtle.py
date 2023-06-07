@@ -43,9 +43,27 @@ def go_right():
 
 
 def change_food_position():
-    food_x_position = random.randint(-300, 300)
-    food_y_position = random.randint(-300, 300)
+    food_x_position = random.randint(-270, 270)
+    food_y_position = random.randint(-270, 270)
     food.goto(food_x_position, food_y_position)
+
+
+def generate_turtle_object(shape, color):
+    turtle_object = turtle.Turtle()
+    turtle_object.speed("fastest")
+    turtle_object.color(color)
+    turtle_object.shape(shape)
+    turtle_object.penup()
+    return turtle_object
+
+
+def reset():
+    time.sleep(1)
+    snake_head.home()
+    snake_head.dir = ""
+    for body in snake_body:
+        body.ht()
+    snake_body = []
 
 
 window = turtle.Screen()
@@ -55,20 +73,11 @@ window.setup(width=600, height=600)
 window.tracer(0)
 
 
-snake_head = turtle.Turtle()
-snake_head.speed("fastest")
-snake_head.color("black")
-snake_head.shape("square")
-snake_head.penup()
-snake_head.goto(100, 100)
+snake_head = generate_turtle_object("square", "black")
+
 snake_head.dir = ""
 
-food = turtle.Turtle()
-food.speed("fastest")
-food.shape("circle")
-food.penup()
-food.shapesize(0.5, 0.5)
-food.color("red")
+food = generate_turtle_object("circle", "red")
 change_food_position()
 
 
@@ -84,11 +93,7 @@ while True:
 
     if snake_head.distance(food) < 15:
         change_food_position()
-        new_body = turtle.Turtle()
-        new_body.speed("fastest")
-        new_body.color("grey")
-        new_body.shape("square")
-        new_body.penup()
+        new_body = generate_turtle_object("square", "grey")
         snake_body.append(new_body)
 
     for i in range(len(snake_body)-1, 0, -1):
@@ -101,12 +106,12 @@ while True:
         snake_body[0].goto(x, y)
 
     if snake_head.xcor() > 290 or snake_head.xcor() < -290 or snake_head.ycor() > 290 or snake_head.ycor() < -290:
-        time.sleep(1)
-        snake_head.home()
-        snake_head.dir = ""
-        for body in snake_body:
-            body.ht()
-            snake_body = []
+        reset()
 
     move_snake()
-    time.sleep(0.1)
+
+    for body in snake_body:
+        if snake_head.distance(body) < 20:
+            reset()
+
+    time.sleep(0.15)
