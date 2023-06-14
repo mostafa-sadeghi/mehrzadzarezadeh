@@ -2,7 +2,9 @@ import turtle
 import time
 import random
 
-
+snake_body = []
+score = 0
+high_score = 0
 def move_snake():
     if snake_head.dir == "up":
         y = snake_head.ycor()
@@ -63,7 +65,7 @@ def reset():
     snake_head.dir = ""
     for body in snake_body:
         body.ht()
-    snake_body = []
+    snake_body.clear()
 
 
 window = turtle.Screen()
@@ -87,11 +89,12 @@ window.onkeypress(go_down, "Down")
 window.onkeypress(go_left, "Left")
 window.onkeypress(go_right, "Right")
 
-snake_body = []
+
 while True:
     window.update()
 
     if snake_head.distance(food) < 15:
+        score += 1
         change_food_position()
         new_body = generate_turtle_object("square", "grey")
         snake_body.append(new_body)
