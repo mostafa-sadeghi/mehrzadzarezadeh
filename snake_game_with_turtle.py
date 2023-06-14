@@ -5,6 +5,8 @@ import random
 snake_body = []
 score = 0
 high_score = 0
+
+
 def move_snake():
     if snake_head.dir == "up":
         y = snake_head.ycor()
@@ -60,6 +62,14 @@ def generate_turtle_object(shape, color):
 
 
 def reset():
+    global score
+    global high_score
+    if score > high_score:
+        high_score = score
+    score = 0
+    score_pen.clear()
+    score_pen.write(
+        f"Score: {score}  High Score: {high_score}", align="center", font=("Arial", 24))
     time.sleep(1)
     snake_head.home()
     snake_head.dir = ""
@@ -82,6 +92,11 @@ snake_head.dir = ""
 food = generate_turtle_object("circle", "red")
 change_food_position()
 
+score_pen = generate_turtle_object("square", "white")
+score_pen.goto(0, 260)
+score_pen.hideturtle()
+score_pen.write(f"Score: {score}  High Score: {high_score}",
+                align="center", font=("Arial", 24))
 
 window.listen()
 window.onkeypress(go_up, "Up")
@@ -95,6 +110,10 @@ while True:
 
     if snake_head.distance(food) < 15:
         score += 1
+        score_pen.clear()
+        score_pen.write(
+            f"Score: {score}  High Score: {high_score}", align="center", font=("Arial", 24))
+
         change_food_position()
         new_body = generate_turtle_object("square", "grey")
         snake_body.append(new_body)
