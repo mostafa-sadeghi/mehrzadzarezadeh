@@ -33,6 +33,18 @@ dragon_right_image = pygame.image.load("dragon_right.png")
 dragon_right_rect = dragon_right_image.get_rect()
 dragon_right_rect.topright = (WINDOW_WIDTH, 0)
 
+player = pygame.transform.scale(
+    pygame.image.load("dragon_right.png"), (50, 50))
+player_rect = player.get_rect()
+player_rect.centerx = 50
+player_rect.bottom = WINDOW_HEIGHT
+
+
+bgsound = pygame.mixer.Sound("bgmusic.mp3")
+loss = pygame.mixer.Sound("loss.wav")
+success = pygame.mixer.Sound("success.wav")
+bgsound.play(-1)
+
 
 running = True
 while running:
@@ -47,8 +59,10 @@ while running:
     pygame.draw.line(display_surface, (255, 255, 255),
                      (0, 75), (WINDOW_WIDTH, 75), 4)
 
-    display_surface.blit(system_text, system_text_rect)
-    display_surface.blit(my_text, my_text_rect)
+    display_surface.blit(player, player_rect)
+
+    # display_surface.blit(system_text, system_text_rect)
+    # display_surface.blit(my_text, my_text_rect)
     pygame.display.update()
 
 pygame.quit()
