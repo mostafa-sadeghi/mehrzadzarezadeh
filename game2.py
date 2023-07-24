@@ -36,6 +36,14 @@ score_text = my_font.render(f"Score: {score}",\
 score_rect = score_text.get_rect()
 score_rect.midleft = (90, 38)
 
+title_text = my_font.render("Dragon Game", True, DARKGREEN, GREEN)
+title_rect = title_text.get_rect()
+title_rect.centerx = WINDOW_WIDTH/2
+title_rect.centery = 38
+
+lives_text = my_font.render(f"Lives: {player_lives}", True, GREEN, DARKGREEN)
+lives_rect = lives_text.get_rect()
+lives_rect.center = (WINDOW_WIDTH - 150, 38)
 
 dragon_left_image = pygame.image.load("dragon_left.png")
 dragon_left_rect = dragon_left_image.get_rect()
@@ -63,7 +71,8 @@ bgsound = pygame.mixer.Sound("bgmusic.mp3")
 loss = pygame.mixer.Sound("loss.wav")
 success = pygame.mixer.Sound("success.wav")
 bgsound.play(-1)
-
+loss.set_volume(.2)
+success.set_volume(.2)
 
 running = True
 while running:
@@ -89,6 +98,19 @@ while running:
 
     coin_rect.x -= coin_velocity
 
+    if player_rect.colliderect(coin_rect):
+        score += 1
+        success.play()
+        coin_velocity += 0.5
+        coin_rect.x = WINDOW_WIDTH + 200
+        coin_rect.y = randint(64, WINDOW_HEIGHT - 32)
+
+
+
+
+
+    lives_text = my_font.render(f"Lives: {player_lives}", True, GREEN, DARKGREEN)
+    score_text = my_font.render(f"Score: {score}", True, GREEN, DARKGREEN)
     display_surface.fill(BLACK)
     display_surface.blit(dragon_left_image,
                          dragon_left_rect)
@@ -100,9 +122,11 @@ while running:
     display_surface.blit(player, player_rect)
     display_surface.blit(coin_image, coin_rect)
     display_surface.blit(score_text, score_rect)
+    display_surface.blit(title_text, title_rect)
+    display_surface.blit(lives_text, lives_rect)
 
-    # display_surface.blit(system_text, system_text_rect)
-    # display_surface.blit(my_text, my_text_rect)
+
+
     pygame.display.update()
     clock.tick(FPS)
 
