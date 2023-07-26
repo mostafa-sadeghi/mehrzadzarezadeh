@@ -1,0 +1,8 @@
+*.exe
+*.spec
+build
+.idea
+.vscode
+.idea
+*.wav
+*.mp3
