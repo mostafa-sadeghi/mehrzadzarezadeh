@@ -46,10 +46,10 @@ def go_right():
         snake_head.dir = "right"
 
 
-def change_food_position():
+def change_food_position(object):
     food_x_position = random.randint(-270, 270)
     food_y_position = random.randint(-270, 270)
-    food.goto(food_x_position, food_y_position)
+    object.goto(food_x_position, food_y_position)
 
 
 def generate_turtle_object(shape, color):
@@ -90,7 +90,7 @@ snake_head = generate_turtle_object("square", "black")
 snake_head.dir = ""
 
 food = generate_turtle_object("circle", "red")
-change_food_position()
+change_food_position(food)
 
 score_pen = generate_turtle_object("square", "white")
 score_pen.goto(0, 260)
@@ -98,26 +98,48 @@ score_pen.hideturtle()
 score_pen.write(f"Score: {score}  High Score: {high_score}",
                 align="center", font=("Arial", 24))
 
+
+bomb = generate_turtle_object("circle", "darkgreen")
+change_food_position(bomb)
+
 window.listen()
 window.onkeypress(go_up, "Up")
 window.onkeypress(go_down, "Down")
 window.onkeypress(go_left, "Left")
 window.onkeypress(go_right, "Right")
 
+def myfunc():
+    global running
+    running = False
 
-while True:
+
+root = window._root
+root.protocol("WM_DELETE_WINDOW", myfunc)
+
+running = True
+while running:
     window.update()
+    score_pen.clear()
+    score_pen.write(
+        f"Score: {score}  High Score: {high_score}", align="center", font=("Arial", 24))
 
     if snake_head.distance(food) < 15:
         score += 1
-        score_pen.clear()
-        score_pen.write(
-            f"Score: {score}  High Score: {high_score}", align="center", font=("Arial", 24))
+        
 
-        change_food_position()
+        change_food_position(food)
         new_body = generate_turtle_object("square", "grey")
         snake_body.append(new_body)
 
+    if snake_head.distance(bomb) < 20:
+        score -= 1
+        if len(snake_body) > 0:
+            snake_body[-1].ht()
+            snake_body.pop()
+        change_food_position(bomb)
+
+    if score < 0:
+        reset()
     for i in range(len(snake_body)-1, 0, -1):
         x = snake_body[i-1].xcor()
         y = snake_body[i-1].ycor()
