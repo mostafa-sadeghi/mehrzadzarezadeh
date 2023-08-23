@@ -4,5 +4,5 @@ build
 .idea
 .vscode
 .idea
-*.wav
+
 *.mp3
