@@ -1,7 +1,6 @@
 from random import choice, randint
 from pygame.sprite import Sprite
-
-from main import WIN_WIDTH
+from config import *
 
 
 class Monster(Sprite):
