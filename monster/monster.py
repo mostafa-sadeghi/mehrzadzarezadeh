@@ -24,5 +24,5 @@ class Monster(Sprite):
         if self.rect.left <= 0 or self.rect.right >= WIN_WIDTH:
             self.dx *= -1
 
-        if self.rect.top <= 100 or self.rect.bottom >= WIN_WIDTH - 100:
+        if self.rect.top <= 100 or self.rect.bottom >= WIN_HEIGHT - 100:
             self.dy *= -1
