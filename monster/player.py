@@ -20,9 +20,27 @@ class Player(Sprite):
         self.warp_sound = pygame.mixer.Sound("assets/warp.wav")
 
     def draw(self, display_surface):
-        pygame.draw.rect(display_surface,(255,255,255), (self.rect.x,
-                                                    self.rect.y,
-                                                    self.image.get_width(),
-                                                    self.image.get_height()
-                                                    ), 3)
+
         display_surface.blit(self.image, self.rect)
+
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_DOWN] and self.rect.bottom < WIN_HEIGHT - 100:
+            self.rect.y += self.velocity
+        if keys[pygame.K_UP] and self.rect.top > 100:
+            self.rect.y -= self.velocity
+        if keys[pygame.K_LEFT] and self.rect.left > 0:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT] and self.rect.right < WIN_WIDTH:
+            self.rect.x += self.velocity
+
+    def warp(self):
+        if self.warps > 0:
+            self.warps -= 1
+            self.warp_sound.play()
+            self.rect.bottom = WIN_HEIGHT
+            self.rect.centerx = WIN_WIDTH / 2
+
+    def reset(self):
+        self.rect.bottom = WIN_HEIGHT
+        self.rect.centerx = WIN_WIDTH/2
