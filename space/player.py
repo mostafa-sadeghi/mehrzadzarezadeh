@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 from constants import *
+from player_bullet import PlayerBullet
 
 
 class Player(Sprite):
@@ -18,12 +19,20 @@ class Player(Sprite):
         self.shoot_sound = pygame.mixer.Sound("space/assets/player_fire.wav")
 
     def update(self):
-        """
-        moves the player from left to right at the bottom of the screen
-        player should not exit from the screen
-        """
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] and self.rect.x > 0:
+            self.rect.x -= self.velocity
+        if keys[pygame.K_RIGHT] and self.rect.x < WINDOW_WIDTH:
+            self.rect.x += self.velocity
 
     def reset(self):
         """
         reset the players position
         """
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def fire(self):
+        PlayerBullet(self.rect.centerx, self.rect.top, self.bullet_group)
+        self.shoot_sound.play()
