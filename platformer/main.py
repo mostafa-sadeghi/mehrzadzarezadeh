@@ -2,17 +2,20 @@ import pygame
 from constants import *
 from world import World
 from levels.level1 import world_data
+from player import Player
 pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-bg = pygame.image.load("assets/backg.png")
+bg = pygame.image.load("assets/sky.png")
 bg = pygame.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
 bg_rect = bg.get_rect()
 bg_rect.topleft = (0, 0)
 
 
 game_world = World(world_data)
+
+my_player = Player(100, SCREEN_HEIGHT-170)
 
 
 def draw_grid():
@@ -32,5 +35,6 @@ while running:
 
     screen.blit(bg, bg_rect)
     draw_grid()
+    my_player.draw(screen)
     game_world.draw(screen)
     pygame.display.update()
