@@ -36,5 +36,6 @@ while running:
     screen.blit(bg, bg_rect)
     draw_grid()
     my_player.draw(screen)
+    my_player.update()
     game_world.draw(screen)
     pygame.display.update()
