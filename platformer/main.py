@@ -36,6 +36,6 @@ while running:
     screen.blit(bg, bg_rect)
     draw_grid()
     my_player.draw(screen)
-    my_player.update()
+    my_player.update(game_world.tile_list,screen)
     game_world.draw(screen)
     pygame.display.update()
