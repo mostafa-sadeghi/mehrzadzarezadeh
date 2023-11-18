@@ -21,16 +21,15 @@ class Player:
             self.idle_images_right.append(img)
             img = pygame.transform.flip(img, True, False)
             self.idle_images_left.append(img)
-        self.image = self.images_right[0]
+        self.image = self.images_left[0]
         self.rect = self.image.get_rect()
         
         self.rect.x = x
         self.rect.y = y
         self.vel_y = 0
-        self.direction = 1
+        self.direction = -1
 
     def update(self, tile_list, screen): 
-        
         dx = 0
         dy = 0
         keys = pygame.key.get_pressed()
@@ -61,19 +60,25 @@ class Player:
                 self.frame_index = 0
         self.vel_y += 1
         dy += self.vel_y
+        if self.direction == 1:
+            rect = pygame.Rect(self.rect.x +40, self.rect.y + 5, self.image.get_width()-60, self.image.get_height()-15)
+        elif self.direction == -1:
+            rect = pygame.Rect(self.rect.x +20, self.rect.y + 5, self.image.get_width()-60, self.image.get_height()-15)
+        # rect = pygame.Rect(self.rect.x , self.rect.y , self.image.get_width(), self.image.get_height())
 
         for tile in tile_list:
-            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.image.get_width(), self.image.get_height()):
+            if tile[1].colliderect(rect.x + dx, rect.y, self.image.get_width()-60, self.image.get_height()-15):
                 dx = 0
-            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.image.get_width(), self.image.get_height()):
+            if tile[1].colliderect(rect.x, rect.y + dy, self.image.get_width()-60, self.image.get_height()-15):
                 self.vel_y = 0
-                dy = tile[1].top - self.rect.bottom
+                dy = tile[1].top - rect.bottom
                 
 
 
         self.rect.x += dx
         self.rect.y += dy
-        pygame.draw.rect(screen, (255,0,0),self.rect,2)
+        pygame.draw.rect(screen, (255,0,0),rect,2)
+        
 
 
     def draw(self, screen):
