@@ -9,4 +9,5 @@ class World:
 
     def draw(self,screen):
         screen.blit(self.image, self.rect)
-        
+        for row in range(ROWS):
+            pygame.draw.line(screen, (240, 10,230), (0, row * 32), ((SCREEN_WIDTH, row * 32)))
