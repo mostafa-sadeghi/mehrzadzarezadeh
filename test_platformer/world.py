@@ -11,3 +11,5 @@ class World:
         screen.blit(self.image, self.rect)
         for row in range(ROWS):
             pygame.draw.line(screen, (240, 10,230), (0, row * 32), ((SCREEN_WIDTH, row * 32)))
+        for col in range(COLS):
+            pygame.draw.line(screen, (240, 10,230), (col * TILE_SIZE, 0), ((col * TILE_SIZE, SCREEN_HEIGHT)))
